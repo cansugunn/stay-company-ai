@@ -1,0 +1,20 @@
+services:
+  my-stay-ollama:
+    ports:
+      - "11434:11434"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - NVIDIA_VISIBLE_DEVICES=0
+      - OLLAMA_NUM_PARALLEL=4
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    volumes:
+      - ollama_data:/root/.ollama
+    restart: always
+volumes:
+  ollama_data:
